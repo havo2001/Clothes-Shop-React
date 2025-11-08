@@ -2,6 +2,18 @@
 
 Simple React project for a clothes shop UI. This repository contains the React source in `src/` and a minimal `package.json` so you can install and run the app locally. The website has been deployed and in use for commercial purpose. However, they didn't continue paying for the cloud service so the link is dead and I can't share you.
 
+This is the partial code, I forgot pushing the API connection, cart and payment part and now I can't find them.
+
+<!-- Demo screenshots -->
+![Home demo](public/home_demo.png)
+
+_Home page demo_
+
+![Product page demo](public/product_page.png)
+
+_Product page demo_
+
+
 ## Quick start
 
 1. Install dependencies:
