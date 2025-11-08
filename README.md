@@ -1,6 +1,6 @@
 # Clothes-Shop-React
 
-Simple React project for a clothes shop UI. This repository contains the React source in `src/` and a minimal `package.json` so you can install and run the app locally.
+Simple React project for a clothes shop UI. This repository contains the React source in `src/` and a minimal `package.json` so you can install and run the app locally. The website has been deployed and in use for commercial purpose. However, they didn't continue paying for the cloud service so the link is dead and I can't share you.
 
 ## Quick start
 

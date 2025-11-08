@@ -168,8 +168,9 @@ const ProductPage = () => {
             const breadcrumbInfo = breadCrumbsDisplay.find(item => item.crumb === crumb);
             const display = breadcrumbInfo ? breadcrumbInfo.display : crumb;
 
-            // If it's the last crumb, set it to productName
-            const productName = index === array.length - 1 ? Products.find(product => product.id === parseInt(crumb)).productName : display;
+            // If it's the last crumb, set it to productName (guard if product missing)
+            const productObj = Products.find(product => product.id === parseInt(crumb));
+            const productName = index === array.length - 1 ? (productObj ? productObj.productName : display) : display;
 
             return (
                 <div className="crumb" key={crumb}>
@@ -210,18 +211,20 @@ const ProductPage = () => {
     const currentId = pathSegments.pop();
     const url = '/' + pathSegments.join('/');
 
-    // Current size of the id:
-    const currentSize = modelOptions.find(item => item.id === parseInt(currentId)).size;
-    const currentColorName = modelOptions.find(item => item.id === parseInt(currentId)).colorName;
-    const currentColor = modelOptions.find(item => item.id === parseInt(currentId)).color;
-    const currentStatus = modelOptions.find(item => item.id === parseInt(currentId)).status;
-    let defaultSize;
+    // Current option for the id (guard against missing id)
+    const parsedId = parseInt(currentId);
+    const currentOption = modelOptions.find(item => item.id === parsedId);
 
-    if (currentSize) {
-        defaultSize = currentSize.size;
-    } else {
-        defaultSize = sizes[0].size;
+    // If there's no matching option, render 404 page to avoid runtime errors
+    if (!currentOption) {
+        return <Page404 />;
     }
+
+    const currentSize = currentOption.size;
+    const currentColorName = currentOption.colorName;
+    const currentColor = currentOption.color;
+    const currentStatus = currentOption.status;
+    const defaultSize = currentSize || sizes[0].size;
 
     // Quantity Button: 
     const [productQuantity, setProductQuantity] = useState(0);
@@ -251,13 +254,17 @@ const ProductPage = () => {
     const clickId = currentId;
     const navigate = useNavigate()
     const getIDWithFixSize = (color) => {
-        const clickId = modelOptions.find(item => item.size === currentSize && item.color === color).id;
-        navigate(`${url}/${clickId}`);
+        const found = modelOptions.find(item => item.size === currentSize && item.color === color);
+        if (found && found.id) {
+            navigate(`${url}/${found.id}`);
+        }
     }
 
     const getIDWithFixColor = (size) => {
-        const clickId = modelOptions.find(item => item.color === currentColor && item.size === size).id;
-        navigate(`${url}/${clickId}`);
+        const found = modelOptions.find(item => item.color === currentColor && item.size === size);
+        if (found && found.id) {
+            navigate(`${url}/${found.id}`);
+        }
     }
 
 
